@@ -1,0 +1,123 @@
+@page "/"
+
+@using RachaAi.Models
+
+<h1 class="mb-4">Dashboard Financeiro</h1>
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card bg-success text-white p-3 shadow">
+
+            <h5>Total a Receber</h5>
+
+            <h3>R$ 500,00</h3>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card bg-danger text-white p-3 shadow">
+
+            <h5>Total a Pagar</h5>
+
+            <h3>R$ 250,00</h3>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card bg-primary text-white p-3 shadow">
+
+            <h5>Saldo Geral</h5>
+
+            <h3>R$ 250,00</h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+<h3 class="mb-3">Grupos Ativos</h3>
+
+<input type="text"
+       class="form-control mb-4"
+       placeholder="Buscar grupo..."
+       @bind="busca"
+       @bind:event="oninput" />
+
+@if (grupos.Count == 0)
+{
+    <div class="alert alert-info">
+
+        Você ainda não participa de nenhum grupo.
+        Que tal criar um?
+
+    </div>
+}
+else
+{
+    <div class="row">
+
+        @foreach (var grupo in grupos
+       .Where(g => g.Nome.ToLower().Contains(busca.ToLower())))
+        {
+            <div class="col-md-6">
+
+                <GrupoCard Grupo="grupo" />
+
+            </div>
+        }
+
+    </div>
+}
+
+<button class="btn btn-warning rounded-circle position-fixed bottom-0 end-0 m-4 shadow"
+        style="width:70px; height:70px; font-size:30px;">
+
+    +
+
+</button>
+
+@code {
+
+    string busca = "";
+
+    List<Grupo> grupos = new()
+    {
+        new Grupo
+        {
+            Nome = "República",
+            Categoria = "Casa",
+            Valor = -120
+        },
+
+        new Grupo
+        {
+            Nome = "Churrasco de Domingo",
+            Categoria = "Lazer",
+            Valor = 80
+        },
+
+        new Grupo
+        {
+            Nome = "Viagem",
+            Categoria = "Turismo",
+            Valor = -300
+        },
+
+        new Grupo
+        {
+            Nome = "Faculdade",
+            Categoria = "Estudos",
+            Valor = 200
+        }
+    };
+
+}
